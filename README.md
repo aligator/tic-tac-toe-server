@@ -1,4 +1,4 @@
 # tic-tac-toe-server
-A server for TickTacToe
+A server for TickTacToe (https://github.com/aligator/tic-tac-toe)
 
-project structure is based on https://github.com/dominikbraun/foodunit
+Project structure is based on https://github.com/dominikbraun/foodunit
