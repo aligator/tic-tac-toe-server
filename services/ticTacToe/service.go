@@ -2,6 +2,7 @@ package ticTacToe
 
 import (
 	"errors"
+	"github.com/aligator/tic-tac-toe-server/constants"
 	"github.com/aligator/tic-tac-toe-server/storage"
 )
 
@@ -32,7 +33,7 @@ func (s Service) SetPosition(position int) error {
 		return err
 	}
 
-	if winner == ' ' {
+	if winner == constants.EMPTY_CELL {
 		return ErrGameAlreadyFinished
 	}
 
@@ -61,7 +62,7 @@ func (s Service) GetWinner() (rune, error) {
 	board, err := s.ticTacToe.GetBoard()
 
 	if err != nil {
-		return ' ', err
+		return constants.EMPTY_CELL, err
 	}
 
 	checks := [][]int{
@@ -81,13 +82,13 @@ func (s Service) GetWinner() (rune, error) {
 		}
 	}
 
-	return ' ', nil
+	return constants.EMPTY_CELL, nil
 }
 
 func getNextPlayer(currentPlayer rune) rune {
-	if currentPlayer == 'X' {
-		return 'O'
+	if currentPlayer == constants.PLAYER1_CELL {
+		return constants.PLAYER2_Cell
 	}
 
-	return 'X'
+	return constants.PLAYER1_CELL
 }

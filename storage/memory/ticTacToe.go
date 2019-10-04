@@ -1,6 +1,9 @@
 package memory
 
-import "errors"
+import (
+	"errors"
+	"github.com/aligator/tic-tac-toe-server/constants"
+)
 
 type TicTacToe struct {
 	currentPlayer rune
@@ -9,12 +12,12 @@ type TicTacToe struct {
 
 func NewTicTacToe() *TicTacToe {
 	ticTacToe := TicTacToe{
-		currentPlayer: 'X',
+		currentPlayer: constants.PLAYER1_CELL,
 		board:         make([]rune, 9),
 	}
 
 	for i, _ := range ticTacToe.board {
-		ticTacToe.board[i] = ' '
+		ticTacToe.board[i] = constants.EMPTY_CELL
 	}
 
 	return &ticTacToe
@@ -32,7 +35,7 @@ func (t *TicTacToe) SetCurrentPlayer(nextPlayer rune) error {
 
 func (t TicTacToe) GetCell(position int) (rune, error) {
 	if len(t.board) <= position {
-		return ' ', errors.New("requested position does not exist")
+		return constants.EMPTY_CELL, errors.New("requested position does not exist")
 	}
 
 	cell := t.board[position]
