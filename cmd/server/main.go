@@ -1,6 +1,9 @@
-package server
+package main
 
-import "log"
+import (
+	"github.com/aligator/tic-tac-toe-server/server"
+	"log"
+)
 
 func main() {
 	s, err := server.New()

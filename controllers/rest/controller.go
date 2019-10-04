@@ -1,10 +1,16 @@
 package rest
 
 import (
+	"errors"
 	"github.com/aligator/tic-tac-toe-server/services/ticTacToe"
 	"net/http"
 )
 import "github.com/go-chi/render"
+
+var (
+	ErrInvalidNumberFormat = errors.New("the provided number format is not valid")
+	ErrProcessingFailed    = errors.New("failed processing the request")
+)
 
 type Controller struct {
 	ticTacToeService *ticTacToe.Service
