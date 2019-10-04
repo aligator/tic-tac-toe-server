@@ -7,8 +7,9 @@ import (
 )
 
 var (
-	ErrPositionNotFound    = errors.New("the requested position could not be found")
+	ErrCellNotFound        = errors.New("the requested cell could not be found")
 	ErrGameAlreadyFinished = errors.New("the game is already finished")
+	ErrCellAlreadySet      = errors.New("the requested cell is already set")
 )
 
 type Service struct {
@@ -41,6 +42,12 @@ func (s Service) SetPosition(position int) error {
 
 	if err != nil {
 		return err
+	}
+
+	if cell, err := s.ticTacToe.GetCell(position); err != nil {
+		return err
+	} else if cell != constants.EMPTY_CELL {
+		return ErrCellAlreadySet
 	}
 
 	err = s.ticTacToe.SetCell(position, currentPlayer)
