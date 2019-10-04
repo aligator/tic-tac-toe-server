@@ -12,23 +12,23 @@ func (c *Controller) DoMove() http.HandlerFunc {
 		position, err := strconv.Atoi(chi.URLParam(r, "position"))
 
 		if err != nil {
-			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
+			respondError(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat)
 			return
 		}
 
 		err = c.ticTacToeService.SetPosition(position)
 
 		if err != nil && err == ticTacToe.ErrCellNotFound {
-			respond(w, r, http.StatusNotFound, err.Error())
+			respondError(w, r, http.StatusNotFound, err)
 			return
 		} else if err != nil && err == ticTacToe.ErrCellAlreadySet {
-			respond(w, r, http.StatusForbidden, err.Error()) // ToDo: is status forbidden ok here?
+			respondError(w, r, http.StatusForbidden, err) // ToDo: is status forbidden ok here?
 			return
 		} else if err != nil && err == ticTacToe.ErrGameAlreadyFinished {
 			respond(w, r, http.StatusOK, false)
 			return
 		} else if err != nil {
-			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			respondError(w, r, http.StatusInternalServerError, ErrProcessingFailed)
 			return
 		}
 
@@ -42,7 +42,7 @@ func (c *Controller) GetFullBoard() http.HandlerFunc {
 		cells, err := c.ticTacToeService.GetBoard()
 
 		if err != nil {
-			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			respondError(w, r, http.StatusInternalServerError, ErrProcessingFailed)
 			return
 		}
 
@@ -63,7 +63,7 @@ func (c *Controller) GetWinner() http.HandlerFunc {
 		winner, err := c.ticTacToeService.GetWinner()
 
 		if err != nil {
-			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			respondError(w, r, http.StatusInternalServerError, ErrProcessingFailed)
 			return
 		}
 

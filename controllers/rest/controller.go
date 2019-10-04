@@ -28,3 +28,12 @@ func respond(w http.ResponseWriter, r *http.Request, status int, v interface{}) 
 	w.WriteHeader(status)
 	render.JSON(w, r, v)
 }
+
+func respondError(w http.ResponseWriter, r *http.Request, status int, err error) {
+	w.WriteHeader(status)
+	render.JSON(w, r, struct {
+		Message string `json:"message"`
+	}{
+		Message: err.Error(),
+	})
+}
