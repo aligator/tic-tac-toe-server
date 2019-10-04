@@ -6,7 +6,8 @@ import (
 )
 
 var (
-	ErrPositionNotFound = errors.New("the requested position could not be found")
+	ErrPositionNotFound    = errors.New("the requested position could not be found")
+	ErrGameAlreadyFinished = errors.New("the game is already finished")
 )
 
 type Service struct {
@@ -24,6 +25,17 @@ func (s Service) GetBoard() ([]rune, error) {
 }
 
 func (s Service) SetPosition(position int) error {
+	// first check if game is not already finished
+	winner, err := s.GetWinner()
+
+	if err != nil {
+		return err
+	}
+
+	if winner == ' ' {
+		return ErrGameAlreadyFinished
+	}
+
 	currentPlayer, err := s.ticTacToe.GetCurrentPlayer()
 
 	if err != nil {
