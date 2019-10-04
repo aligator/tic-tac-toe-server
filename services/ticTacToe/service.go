@@ -34,3 +34,33 @@ func (s Service) GetBoard() (Board, error) {
 	}
 	return board, nil
 }
+
+func (s Service) SetPosition(position int) error {
+	currentPlayer, err := s.ticTacToe.GetCurrentPlayer()
+
+	if err != nil {
+		return err
+	}
+
+	err = s.ticTacToe.SetCell(position, currentPlayer)
+
+	if err != nil {
+		return err
+	}
+
+	err = s.ticTacToe.SetCurrentPlayer(getNextPlayer(currentPlayer))
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func getNextPlayer(currentPlayer rune) rune {
+	if currentPlayer == 'X' {
+		return 'O'
+	}
+
+	return 'X'
+}

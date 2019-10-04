@@ -3,12 +3,14 @@ package memory
 import "errors"
 
 type TicTacToe struct {
-	board []rune
+	currentPlayer rune
+	board         []rune
 }
 
 func NewTicTacToe() *TicTacToe {
 	ticTacToe := TicTacToe{
-		make([]rune, 9),
+		currentPlayer: 'X',
+		board:         make([]rune, 9),
 	}
 
 	for i, _ := range ticTacToe.board {
@@ -16,6 +18,16 @@ func NewTicTacToe() *TicTacToe {
 	}
 
 	return &ticTacToe
+}
+
+func (t TicTacToe) GetCurrentPlayer() (rune, error) {
+	return t.currentPlayer, nil
+}
+
+func (t *TicTacToe) SetCurrentPlayer(nextPlayer rune) error {
+	t.currentPlayer = nextPlayer
+
+	return nil
 }
 
 func (t TicTacToe) GetCell(position int) (rune, error) {
