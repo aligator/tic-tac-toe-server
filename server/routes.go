@@ -11,7 +11,6 @@ func (s *Server) mountRoutes() {
 		r.Route("/board", func(r chi.Router) {
 			r.Get("/", s.controller.GetFullBoard())
 			r.Route("/{position}", func(r chi.Router) {
-				r.Get("/", s.controller.GetBoardPosition())
 				r.Put("/", s.controller.DoMove())
 			})
 		})

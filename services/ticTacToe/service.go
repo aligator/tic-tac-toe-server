@@ -19,7 +19,18 @@ func NewService(t storage.TicTacToe) *Service {
 	}
 }
 
-func (s Service) GetPosition(position int) (rune, error) {
+func (s Service) GetBoard() (Board, error) {
+	cells, err := s.ticTacToe.GetBoard()
 
-	return 'X', nil
+	if err != nil {
+		return Board{}, err
+	}
+
+	board := Board{Board: make([]string, 0)}
+
+	// convert rune to string
+	for _, cell := range cells {
+		board.Board = append(board.Board, string(cell))
+	}
+	return board, nil
 }

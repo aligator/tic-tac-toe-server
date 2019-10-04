@@ -1,6 +1,5 @@
 package ticTacToe
 
-type Position struct {
-	Position int    `jsom:"position"`
-	Value    string `json:"value"`
+type Board struct {
+	Board []string `json:"board`
 }
