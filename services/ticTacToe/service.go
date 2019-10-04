@@ -33,7 +33,7 @@ func (s Service) SetPosition(position int) error {
 		return err
 	}
 
-	if winner == constants.EMPTY_CELL {
+	if winner != constants.EMPTY_CELL {
 		return ErrGameAlreadyFinished
 	}
 

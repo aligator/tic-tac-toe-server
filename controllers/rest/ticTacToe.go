@@ -18,8 +18,11 @@ func (c *Controller) DoMove() http.HandlerFunc {
 
 		err = c.ticTacToeService.SetPosition(position)
 
-		if err != nil && (err == ticTacToe.ErrPositionNotFound) {
+		if err != nil && err == ticTacToe.ErrPositionNotFound {
 			respond(w, r, http.StatusNotFound, err.Error())
+			return
+		} else if err != nil && err == ticTacToe.ErrGameAlreadyFinished {
+			respond(w, r, http.StatusOK, false)
 			return
 		} else if err != nil {
 			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
