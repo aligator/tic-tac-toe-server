@@ -33,14 +33,37 @@ func (c *Controller) DoMove() http.HandlerFunc {
 
 func (c *Controller) GetFullBoard() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		board, err := c.ticTacToeService.GetBoard()
+		cells, err := c.ticTacToeService.GetBoard()
 
 		if err != nil {
 			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
 			return
 		}
 
+		board := ticTacToe.Board{Board: make([]string, 0)}
+
+		// convert rune to string as json has no char/rune like datatype
+		for _, cell := range cells {
+			board.Board = append(board.Board, string(cell))
+		}
+
 		respond(w, r, http.StatusOK, board)
+		return
+	}
+}
+
+func (c *Controller) GetWinner() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		winner, err := c.ticTacToeService.GetWinner()
+
+		if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			return
+		}
+
+		respond(w, r, http.StatusOK, ticTacToe.Winner{
+			Winner: string(winner),
+		})
 		return
 	}
 }

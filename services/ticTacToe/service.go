@@ -19,20 +19,8 @@ func NewService(t storage.TicTacToe) *Service {
 	}
 }
 
-func (s Service) GetBoard() (Board, error) {
-	cells, err := s.ticTacToe.GetBoard()
-
-	if err != nil {
-		return Board{}, err
-	}
-
-	board := Board{Board: make([]string, 0)}
-
-	// convert rune to string
-	for _, cell := range cells {
-		board.Board = append(board.Board, string(cell))
-	}
-	return board, nil
+func (s Service) GetBoard() ([]rune, error) {
+	return s.ticTacToe.GetBoard()
 }
 
 func (s Service) SetPosition(position int) error {
@@ -55,6 +43,33 @@ func (s Service) SetPosition(position int) error {
 	}
 
 	return nil
+}
+
+func (s Service) GetWinner() (rune, error) {
+	board, err := s.ticTacToe.GetBoard()
+
+	if err != nil {
+		return ' ', err
+	}
+
+	checks := [][]int{
+		{0, 1, 2},
+		{3, 4, 5},
+		{6, 7, 8},
+		{0, 3, 6},
+		{1, 4, 7},
+		{2, 5, 8},
+		{0, 4, 8},
+		{2, 4, 6},
+	}
+
+	for _, check := range checks {
+		if board[check[0]] == board[check[1]] && board[check[0]] == board[check[2]] {
+			return board[check[0]], nil
+		}
+	}
+
+	return ' ', nil
 }
 
 func getNextPlayer(currentPlayer rune) rune {
