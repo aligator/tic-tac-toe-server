@@ -46,7 +46,11 @@ func (c *Controller) GetFullBoard() http.HandlerFunc {
 			return
 		}
 
-		board := ticTacToe.Board{Board: make([]string, 0)}
+		board := struct {
+			Board []string `json:"board`
+		}{
+			Board: make([]string, 0),
+		}
 
 		// convert rune to string as json has no char/rune like datatype
 		for _, cell := range cells {
@@ -67,7 +71,9 @@ func (c *Controller) GetWinner() http.HandlerFunc {
 			return
 		}
 
-		respond(w, r, http.StatusOK, ticTacToe.Winner{
+		respond(w, r, http.StatusOK, struct {
+			Winner string `json:"winner`
+		}{
 			Winner: string(winner),
 		})
 		return
