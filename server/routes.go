@@ -22,6 +22,7 @@ func (s *Server) mountRoutes() {
 
 	r.Route("/game", func(r chi.Router) {
 		r.Get("/winner", s.controller.GetWinner())
+		r.Get("/current_player", s.controller.GetCurrentPlayer())
 		r.Route("/board", func(r chi.Router) {
 			r.Get("/", s.controller.GetFullBoard())
 			r.Route("/{position}", func(r chi.Router) {

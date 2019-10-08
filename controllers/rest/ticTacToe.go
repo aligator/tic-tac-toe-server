@@ -79,3 +79,21 @@ func (c *Controller) GetWinner() http.HandlerFunc {
 		return
 	}
 }
+
+func (c *Controller) GetCurrentPlayer() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		currentPlayer, err := c.ticTacToeService.GetCurrentPlayer()
+
+		if err != nil {
+			respondError(w, r, http.StatusInternalServerError, ErrProcessingFailed)
+			return
+		}
+
+		respond(w, r, http.StatusOK, struct {
+			CurrentPlayer string `json:"currentPlayer"`
+		}{
+			CurrentPlayer: string(currentPlayer),
+		})
+		return
+	}
+}

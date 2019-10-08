@@ -92,6 +92,10 @@ func (s Service) GetWinner() (rune, error) {
 	return constants.EMPTY_CELL, nil
 }
 
+func (s Service) GetCurrentPlayer() (rune, error) {
+	return s.ticTacToe.GetCurrentPlayer()
+}
+
 func getNextPlayer(currentPlayer rune) rune {
 	if currentPlayer == constants.PLAYER1_CELL {
 		return constants.PLAYER2_Cell
