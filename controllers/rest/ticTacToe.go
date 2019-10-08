@@ -47,7 +47,7 @@ func (c *Controller) GetFullBoard() http.HandlerFunc {
 		}
 
 		board := struct {
-			Board []string `json:"board`
+			Board []string `json:"board"`
 		}{
 			Board: make([]string, 0),
 		}
@@ -72,7 +72,7 @@ func (c *Controller) GetWinner() http.HandlerFunc {
 		}
 
 		respond(w, r, http.StatusOK, struct {
-			Winner string `json:"winner`
+			Winner string `json:"winner"`
 		}{
 			Winner: string(winner),
 		})
